@@ -3,17 +3,17 @@
 #include<math.h>
 #include<string.h>
 #include<conio.h>
- FILE *R_N;
+
    
 
 int max=20;
 int main(){
-    //  FILE *R_N;
-    // R_N=fopen("Restaurant_Name.txt","wb+");
-    int choice;
-    char search_name[40];
+     FILE *R_N;
     
- system("cls");
+    int choice;
+    char search_name[40],another;
+    
+
  struct customer{
          
           int item;
@@ -27,7 +27,7 @@ int main(){
     } c;
     int size;
     size=sizeof(c);
-   char another='y';
+ 
    R_N=fopen("Restaurant_Name.txt","rb+");
    if(R_N==NULL){
        R_N=fopen("Restaurant_Name.txt","wb+");
@@ -38,6 +38,7 @@ int main(){
    }
 
 while(1){
+     system("cls");
     printf("\nPlease select operation you want to perform\n\n");
     printf("1.Generate Inoice\n");
     printf("2.Show All Incoice\n");
@@ -49,23 +50,11 @@ while(1){
     {
         case 1:
         fseek(R_N,0,SEEK_END);
-        char another='y';
+         another='y';
 
-    while(another=='y'||another=='Y'){struct customer{
-         
-          int item;
-        char Cus_Name[40],(Item_Name[max])[40],discount;
-      int unitprice[max],quantity[max];
-        float Total[max],subtotal;
-        float Net_total,Grand_total,cgst,sgst;
-        float Discount;
-        float dis;
-
-    } c;
-    int size;
-    size=sizeof(c);
+    while(another=='y'||another=='Y'){
    
-    system("cls");
+    
 printf("\nEnter name of customer:");
 scanf("%s",c.Cus_Name);
 printf("Enter the number of item taken:");
@@ -127,7 +116,7 @@ if(s=='y'||s=='Y'){
      
     fwrite(&c,size,1,R_N);
     if(fwrite!=0){
-        printf("\nSuccesfully Saved");
+        printf("\nSuccesfully Saved!");
     }
     else
     printf("\nEROR");
@@ -138,15 +127,15 @@ printf("\nCreate another invoice(y/n)");
 another=getch();
 
  }
- fclose(R_N);
+
 
 
 break;
 case 2:
-    R_N=fopen("     Restaurant_Name.txt","rb+");
+   
     rewind(R_N);
     while(fread(&c,size,1,R_N)==1){
-    printf("\n\n\t\t\t\t     Restaurant Name\n");
+    printf("\n\n\t\t\t\t         Restaurant Name\n");
 printf("\t\t\t\t\t-------------------------\n");
 printf("Date:\n");
 printf("Invoice To:%s\n",c.Cus_Name);
@@ -170,24 +159,21 @@ printf("Grand Total                                                    %.2f\n",c
 printf("---------------------------------------------------------------------------------------------\n");
 
     }
-    fclose(R_N);
+    
     break;
    
 
 case 3:
-
+another='y';
+while(another=='y'||another=='Y'){
 printf("Enter the name of customer to search:");
 scanf("%s",search_name);
-fflush(stdin);
-R_N=fopen("Restaurant_Name","rb");
-if(R_N==NULL){
-    printf("\nFile Not Found");
-    exit(1);
-}
 
 FILE *S_C;
-S_C=fopen("Search_Customer","wb");
+S_C=fopen("Search_Customer","wb+");
 rewind(R_N);
+
+
 while(fread(&c,size,1,R_N)==1){
     if(strcmp(c.Cus_Name,search_name)==0){
         fwrite(&c,size,1,S_C);
@@ -196,6 +182,7 @@ while(fread(&c,size,1,R_N)==1){
     printf("No customer Found");
 }
 fclose(R_N);
+
 while(fread(&c,size,1,S_C)==1){
     printf("\n\n\t\t\t\t     Restaurant Name\n");
 printf("\t\t\t\t\t-------------------------\n");
@@ -220,7 +207,12 @@ printf("------------------------------------------------------------------------
 printf("Grand Total                                                    %.2f\n",c.Grand_total);
 printf("---------------------------------------------------------------------------------------------\n");
 
-    
+}  
+fclose(S_C);
+remove("Search_Customer");
+printf("Search another customer");
+fflush(stdin);
+another=getch();
     
 }
 break;
@@ -233,5 +225,7 @@ break;
 
 
 
+
 }
+return 0;
 }

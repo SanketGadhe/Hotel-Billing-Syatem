@@ -46,7 +46,6 @@ int main(){
       printf("\n\t\t\t\t\t\t0.Exit\n");
      //gotoxy(30,20);
       printf("\n\t\t\t\t\t\tYour choice");
-      
       fflush(stdin);
       choice=getch();
       switch(choice)
@@ -115,7 +114,7 @@ int main(){
           break;
           case 0:
           fclose(fp);
-          exit(0);
+          exit(1);
       }
 
   }
